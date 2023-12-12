@@ -11,3 +11,6 @@ sentence-transformers==2.2.2
 huggingface-hub==0.14.1
 pinecone-client
 google-generativeai
+streamlit_extras
+pip install streamlit
+pip install googletrans==4.0.0-rc1
