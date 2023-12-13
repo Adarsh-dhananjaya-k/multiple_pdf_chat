@@ -26,19 +26,19 @@ sys.path.append('/Users/adarsh/Documents/multiple_pdf_chat/')
 os.environ["GOOGLE_API_KEY"] = "AIzaSyDRnIO0C85J8vRZg8TBtQQLpNbDCUXmZdw"
 
 # llm = OpenAI(temperature=0)
-# llm=GooglePalm(temperature=1.0)
+llm=GooglePalm(temperature=.4)
 # The commented code `# llm = LlamaCpp(...)` is initializing an instance of the `LlamaCpp` class from
 # the `langchain.llms` module. It is setting up the LlamaCpp language model with specific parameters
 # such as streaming, model path, temperature, top_p, verbose, and n_ctx. These parameters control the
 # behavior and performance of the LlamaCpp model.
-llm = LlamaCpp(
-    streaming = True,
-    model_path="mistral-7b-instruct-v0.1.Q4_K_M.gguf",
-    temperature=0.75,
-    top_p=1, 
-    verbose=True,
-    n_ctx=4096
-)
+# llm = LlamaCpp(
+#     streaming = True,
+#     model_path="mistral-7b-instruct-v0.1.Q4_K_M.gguf",
+#     temperature=0.75,
+#     top_p=1, 
+#     verbose=True,
+#     n_ctx=4096
+# )
 print(llm)
 
 def summarize_pdfs_from_folder(pdfs_folder):
@@ -81,7 +81,7 @@ def main():
         
             st.session_state.endtime=time.time()-start_time
         except:
-            st.warning("please upload the file  ")
+            st.write("please upload the file  ")
 
         with st.sidebar:
             st.subheader("PERFORMANCE measurement")

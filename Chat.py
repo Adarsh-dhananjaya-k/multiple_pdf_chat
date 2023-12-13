@@ -15,7 +15,7 @@ import logging
 import psutil 
 
 def translate_text(text, target_language='en'):
-    print("tranlateing in text to ",target_language)
+    print("tranlate in text to ",target_language)
     translator = Translator()
     translation = translator.translate(text, dest=target_language)
     return translation.text
@@ -51,8 +51,8 @@ def get_vectorStore(text_chunks):
 
 
 def get_conversation_chain(vectorstore):
-    llm = GooglePalm(temperature=1.0)
-    #llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
+    llm = GooglePalm(temperature=0.4)
+    # llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
 
     memory = ConversationBufferMemory(
         memory_key='chat_history', return_messages=True)
@@ -70,12 +70,21 @@ def handle_userinput(user_question):
     st.session_state.chat_history=response['chat_history']
 
     for i,message in enumerate(st.session_state.chat_history):
-        if i%2==0:
-                st.write(user_template.replace(
-                    "{{MSG}}", translate_text(message.content,st.session_state.target_language)), unsafe_allow_html=True)
-        else:
-            st.write(bot_template.replace(
-                "{{MSG}}", translate_text(message.content,st.session_state.target_language)), unsafe_allow_html=True)
+            if st.session_state.target_language =='en':
+                if i%2==0:
+                        st.write(user_template.replace(
+                            "{{MSG}}", message.content), unsafe_allow_html=True)
+                else:
+                    st.write(bot_template.replace(
+                        "{{MSG}}",message.content), unsafe_allow_html=True)
+            
+            else :
+                if i%2==0:
+                        st.write(user_template.replace(
+                            "{{MSG}}", translate_text(message.content,st.session_state.target_language)), unsafe_allow_html=True)
+                else:
+                    st.write(bot_template.replace(
+                        "{{MSG}}", translate_text(message.content,st.session_state.target_language)), unsafe_allow_html=True)
     
             
 
@@ -134,11 +143,12 @@ def main():
         try:
             handle_userinput(user_question)
         except:
-            st.warning("upload file")
+            st.write("upload file")
 
             
     st.session_state.endtime=time.time()
     with st.sidebar:
+        
         Start_time = time.time()
         st.subheader("your documents")
         pdf_doc=st.file_uploader("upload your PDF here ", accept_multiple_files=True)
@@ -156,11 +166,13 @@ def main():
 
                 st.session_state.conversation = get_conversation_chain(
                     vector_store)
+                
         st.session_state.endtime=time.time()-Start_time        
         
-        
+        print("endtime",st.session_state.endtime)
         language=st.selectbox("Select target language:",['english','hindi', 'bengali', 'telugu', 'marathi', 'tamil', 'urdu', 'gujarati', 'malayalam', 'kannada', 'oriya', 'punjabi', 'assamese', 'maithili', 'santali', 'kashmiri', 'konkani', 'sindhi', 'nepali', 'dogri', 'bodo', 'khasi', 'mizo', 'garo', 'manipuri'])        
         st.session_state.target_language =indian_languages[language]
+        print(st.session_state.target_language)
         st.subheader("PERFORMANCE measurement")
         perform_monitoring(st.session_state.endtime)
 
