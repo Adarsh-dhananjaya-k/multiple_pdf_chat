@@ -131,7 +131,7 @@ def perform_monitoring(time):
         kpi2.metric(label="Memory Usage", value= int(memory), delta= - 10 + memory)
         kpi3.metric(label="Network Activity", value= f"{round(network.bytes_sent + network.bytes_recv)} ")
 
-        kpi4.metric(label="time", value= f"{round(time)} ")
+        kpi4.metric(label="time", value= f"{time} ")
         st.write(f'CPU Usage: {cpu}% | Memory Usage: {memory}% | Network Activity: {network.bytes_sent + network.bytes_recv} bytes')
 
         # Raise an alert if CPU usage exceeds the threshold
