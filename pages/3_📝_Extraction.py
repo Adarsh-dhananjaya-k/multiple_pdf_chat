@@ -70,6 +70,7 @@ def main():
     uploaded_files = st.file_uploader("Upload one or more PDF files", type="pdf", accept_multiple_files=True)
     start_time = time.time()
     if uploaded_files:
+       
         st.subheader("Results:")
         start_time = time.time()
         for uploaded_file in uploaded_files:
@@ -120,7 +121,7 @@ def main():
             start_function_time = time.time()
             print(st.session_state.endtime)
             # execution_time = time.time() - start_function_time
-            execution_time_kpi.metric("Execution Time", value=st.session_state.endtime)
+            execution_time_kpi.metric("Execution Time in sec ", value=st.session_state.endtime)
 
             # Raise an alert if CPU usage exceeds the threshold
             if metrics['CPU Usage'] > cpu_threshold:

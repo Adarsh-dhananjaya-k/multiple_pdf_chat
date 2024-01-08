@@ -10,10 +10,15 @@ def Performance_matrix():
     st.title("Performance Matrix")
     
     data = {
+            # 'Model': ['Google Plam', 'Mistal AI', 'Hugging_face API '],
+            
+            # 'PDF Chat': [23, 34, 23],
+            # 'Summarization_time': [45, 56, 45],
+            # 'Keyword Extraction': [66, 34, 34]
             'Model': ['Google Plam', 'Mistal AI', 'Hugging_face API '],
-            'PDF Chat': [23, 34, 23],
-            'Summarization_time': [45, 56, 45],
-            'Keyword Extraction': [66, 34, 34]
+            'PDF Chat': [30, 20, 26],
+            'Summarization_time': [55, 30, 40],
+            'Keyword Extraction': [46, 21, 33]
                 }
 
         # Create DataFrame
@@ -44,7 +49,7 @@ def Performance_matrix():
     chart3 = alt.Chart(df).mark_bar().encode(
         x='Model',
         y='PDF Chat',
-        color=alt.value()  # Set the bar color
+        # color=alt.value()  # Set the bar color
 
         
     )
